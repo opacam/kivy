@@ -33,7 +33,11 @@ class FboTest(Widget):
 
 class FBOPy2Py3TestCase(GraphicUnitTest):
     def test_fbo_get_pixel_color(self):
+        print('************************')
+        print('test_fbo_get_pixel_color')
+        print('************************')
         fbow = FboTest()
+        print('fbow is: {}'.format(fbow))
         render_error = 2
         values = (
             # out of bounds of FBO
@@ -54,19 +58,30 @@ class FBOPy2Py3TestCase(GraphicUnitTest):
             (list, int, [0, 145, 0, 255]),
         )
 
+        print('******************************************')
+        print('Begin test for fbow.positions:\n* {} *'.format(fbow))
+        print('******************************************')
         for i, pos in enumerate(fbow.positions):
+            print('* testing: "{}" -> "{}"'.format(i, pos))
             c = fbow.fbo.get_pixel_color(pos[0], pos[1])
+            print('\t- "c" is: "{}"'.format(c))
+            print('\t\t* "c" should be: "{}"'.format(values[i][0]))
             # returned class
             self.assertTrue(isinstance(c, values[i][0]))
             # returned types in container
             for v in c:
+                print('\t- "v" in c is: "{}"'.format(v))
+                print('\t\t* "v" in c should be: "{}"'.format(values[i][0]))
                 self.assertTrue(isinstance(v, values[i][1]))
             # returned values
             for j, val in enumerate(c):
+                print('\t- "j", "val" is: "{}", "{}"'.format(j, val))
+                print('\t\t* "v" in c should be: "{}"'.format(values[i][2][j]))
                 self.assertAlmostEqual(
                     val, values[i][2][j],
                     delta=render_error
                 )
+        print('******************************************')
 
 
 if __name__ == '__main__':
